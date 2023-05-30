@@ -28,6 +28,29 @@ app.post("/signIn", async (request , response)=>{
 
 })
 
+
+app.get("/all", async (request , response)=>{
+    try{
+        console.log("finding users")
+        var users= await User.find()
+        response.send(users)
+
+    }catch(error){
+        var status = {
+            "message" : "error fetching data from the data base",
+            "error": error
+        }
+        response.send(status)
+    }
+
+})
+
+
+
+
+
+
+
 app.listen(3000,()=>{
     console.log("server on")
 }
