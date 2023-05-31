@@ -25,7 +25,6 @@ app.post("/signIn", async (request , response)=>{
         }
         response.send(status)
     }
-
 })
 
 
@@ -42,6 +41,28 @@ app.get("/all", async (request , response)=>{
         }
         response.send(status)
     }
+
+})
+
+app.get("/getUser/:id", async (request , response ) =>{
+   try{
+    var id = request.params.id ;
+    console.log("finding user with id : ",id)
+    var status = {
+        message : "User found",
+        UserInfo : await User.findOne({_id:id})
+    }    
+    response.send(status)
+   }catch(error){
+    var status = {
+        "message" : "error finding user  from the data base",
+        "error": error
+    }
+    response.send(status)
+   }
+
+
+
 
 })
 
