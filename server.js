@@ -7,7 +7,6 @@ require("./config/connect")
 
 
 
-
 app.use(express.json())
 app.use('/product', productRouter)
 app.use("/user",userRouter)

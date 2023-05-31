@@ -2,19 +2,50 @@
 const Product = require('../models/Product') 
 
 const express = require('express')
-
 const router = express.Router() ;
+const multer= require('multer')
 
-router.post("/add", async (request , response)=>{
+var filename =""
+/* var config= {
+    destination :"./uploads/productData",
+    fileName : (req , file , redirect)=>{
+        let date=Date.now()
+        console.log(date)
+        let fn= date +"."+file.mimetype.split('/')[1] ;
+        filename=fn
+        redirect(null , fn)
+        
+    }
+} */
+const Productstorage = multer.diskStorage({
+    destination :"./uploads/productData",
+    filename : (req , file , redirect)=>{
+        let date=Date.now()
+        console.log(date)
+        let fn= date +"."+file.mimetype.split('/')[1] ;
+        filename=fn
+        redirect(null , fn)
+        
+    }
+})
+
+
+const upload = multer({storage:Productstorage})
+
+
+router.post("/add", upload.any('files') , async (request , response)=>{
     try{
         console.log("adding Product")
         data = request.body ;
         var product = new Product(data) ;
+        product.image=filename ; 
+        
         var productInfo= await product.save() 
         var status  = {
             "message" : "Product added successfully",
             "productInfo": productInfo
         } 
+        filename =""
         response.status(200).send(status)
     }
     catch (error) {
