@@ -86,7 +86,20 @@ app.get("/delete/:id" , async (request , response)=>{
     }
 })
 
-
+app.put("/update/:id", async (request , response)=>{
+    try {
+        var id = request.params.id ; 
+        var data = request.body
+        infoUser = await User.findByIdAndUpdate({_id:id}, data)
+        response.send(infoUser)
+    }catch(error){
+        var status = {
+            "message" : "error finding user  from the data base",
+            "error": error
+        }
+        response.send(status)
+    }
+})
 
 
 
