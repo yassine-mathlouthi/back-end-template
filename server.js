@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express') ;
 const app = express() ; 
 
@@ -64,6 +65,25 @@ app.get("/getUser/:id", async (request , response ) =>{
 
 
 
+})
+
+
+app.get("/delete/:id" , async (request , response)=>{
+    try {    
+        var id = request.params.id ; 
+        console.log("deleting user with id : ", id )
+        var status ={
+            messgae : "User deleted",
+            userDeleted: await User.findByIdAndDelete({_id:id})
+        }
+        response.send(status)
+    }catch (error){
+        var status = {
+            "message" : "error deleting  from the data base",
+            "error": error
+        }
+        response.send(status)
+    }
 })
 
 
