@@ -10,7 +10,7 @@ require("./config/connect")
 app.use(express.json())
 app.use('/product', productRouter)
 app.use("/user",userRouter)
-
+app.use('/getimage',express.static('./uploads/productData'))
 
 app.listen(3000,()=>{
     console.log("server on")

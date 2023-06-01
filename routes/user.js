@@ -1,27 +1,30 @@
 const User= require("../models/User")
-
+const bcrypt  = require('bcrypt')
 const express = require('express')
 const router = express.Router() ;
 
 
-router.post("/signIn", async (request , response)=>{
+router.post("/register", async (request , response)=>{
     try{
         console.log("adding user")
         data = request.body ;
         var user = new User(data) ;
+        salt = bcrypt.genSaltSync(5)
+        password= await bcrypt.hashSync(data.password , salt)
+        user.password= password
         var userInfo= await user.save() 
         var status  = {
             "message" : "user added successfully",
             "userInfo": userInfo
         } 
-        response.send(status)
+        response.status(200).send(status)
     }
     catch (error) {
         var status = {
             "message" : "error in adding the new user",
             "error": error
         }
-        response.send(status)
+        response.status(400).send(status)
     }
 })
 

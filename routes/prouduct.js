@@ -4,7 +4,6 @@ const Product = require('../models/Product')
 const express = require('express')
 const router = express.Router() ;
 const multer= require('multer')
-
 var filename =""
 /* var config= {
     destination :"./uploads/productData",
@@ -17,6 +16,8 @@ var filename =""
         
     }
 } */
+
+
 const Productstorage = multer.diskStorage({
     destination :"./uploads/productData",
     filename : (req , file , redirect)=>{

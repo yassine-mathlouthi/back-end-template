@@ -9,6 +9,9 @@ const schema = {
     }, 
     email : {
         type : String
+    },
+    password : {
+        type : String 
     }
 }
 
