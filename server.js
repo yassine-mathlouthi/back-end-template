@@ -1,3 +1,17 @@
+/* 
+author  : Yassine Mathlouhi . 
+
+nodejs mongodb data base contains two models, user and product with full crud . 
+
+features include being able to login, 
+verify,  
+create an account, as well as being able to upload files and photos for products to the server's uploads folder. 
+
+*/ 
+
+
+
+
 const { response } = require('express');
 const express = require('express') ;
 const app = express() ; 
@@ -13,6 +27,6 @@ app.use("/user",userRouter)
 app.use('/getimage',express.static('./uploads/productData'))
 
 app.listen(3000,()=>{
-    console.log("server on")
+    console.log("server on powred by : Yassine Mathlouthi ")
 }
 );
