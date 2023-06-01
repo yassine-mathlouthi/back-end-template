@@ -1,8 +1,9 @@
 const User= require("../models/User")
 const bcrypt  = require('bcrypt')
-const express = require('express')
+const express = require('express');
+const { response } = require("express");
 const router = express.Router() ;
-
+const jwt = require ("jsonwebtoken")
 
 router.post("/register", async (request , response)=>{
     try{
@@ -27,6 +28,31 @@ router.post("/register", async (request , response)=>{
         response.status(400).send(status)
     }
 })
+
+router.post("/login" , async (request , response )=>{
+    data = request.body ; 
+    var user = await User.findOne({email:data.email})
+    if(!user){
+        response.status(404).send("invalid email or password")
+    }
+    else {
+        console.log("user",user)
+        var password = bcrypt.compareSync(data.password , user.password)
+        if(!password){
+            response.status(401).send("invalid name or password")
+        }
+        else {
+            var payload = {
+                name : user.name , 
+                email : user.email, 
+                _id : user.id
+            }
+            token = jwt.sign(payload , "123")
+            response.status(200).send({tokens:token})
+        }
+    }
+})
+
 
 
 router.get("/all", async (request , response)=>{
